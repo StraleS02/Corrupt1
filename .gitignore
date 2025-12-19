@@ -1,0 +1,59 @@
+# ========== Unity Specific ==========
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# ========== OS Specific ==========
+.DS_Store
+Thumbs.db
+
+# ========== Visual Studio / JetBrains ==========
+.vs/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# ========== Auto-generated ==========
+*.pidb
+*.booproj
+*.svd
+
+# ========== Cache & Local ==========
+*.apk
+*.aab
+*.exe
+*.app
+*.zip
+*.tar.gz
+*.unitypackage
+
+# ========== Addressables & Build Cache ==========
+[Aa]ssetBundles/
+[Bb]uildCache/
+[Bb]ee/
+
+# ========== Crash Reports & Profiling ==========
+*.stacktrace
+*.dmp
+
+# ========== Collaborate / PlasticSCM ==========
+.CollabIgnore
+PlasticWorkspace/
+
+# ========== Logs ==========
+*.log
+
+# Unity Lighting data (baked)
+**/LightingData.asset
+**/Lightmap-*
+**/ReflectionProbe-*
