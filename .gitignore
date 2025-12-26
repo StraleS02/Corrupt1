@@ -55,5 +55,6 @@ PlasticWorkspace/
 
 # Unity Lighting data (baked)
 **/LightingData.asset
+**/LightingData.asset.meta
 **/Lightmap-*
 **/ReflectionProbe-*
