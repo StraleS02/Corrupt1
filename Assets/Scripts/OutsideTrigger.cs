@@ -109,6 +109,8 @@ public class OutsideTrigger : MonoBehaviour
 
         if (player != null && spawnPointDream != null && Stage.dream)
         {
+            Stage.dream = false;
+
             cutScene.SetActive(false);
             player.transform.position = spawnPointDream.transform.position;
             player.SetActive(true);

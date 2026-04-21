@@ -25,9 +25,9 @@ public class SleepTrigger : MonoBehaviour
 
         if (distance <= sleepDistance)
         {
-            if(Tasks.flashlight) uiPrompt.SetActive(true);
+            if(Tasks.flashlight && !Tasks.wokeUp) uiPrompt.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.E) && Tasks.flashlight)
+            if (Input.GetKeyDown(KeyCode.E) && Tasks.flashlight && !Tasks.wokeUp)
             {
                 StartCoroutine(Sleep());
             }

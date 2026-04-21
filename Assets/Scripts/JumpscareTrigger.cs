@@ -5,11 +5,12 @@ public class JumpscareTrigger : MonoBehaviour
 {
     public GameObject player, figure;
     private readonly float radius = 10f;
+    private GameObject nextPoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        nextPoint = GameObject.Find("FabricPoint");
     }
 
     // Update is called once per frame
@@ -19,13 +20,18 @@ public class JumpscareTrigger : MonoBehaviour
 
         if (distance <= radius)
         {
-            GameObject icon = HomeEnterTrigger.FindChildByName(player, "CompassIcon");
-            icon.SetActive(false);
+            //GameObject icon = HomeEnterTrigger.FindChildByName(player, "CompassIcon");
+            //icon.SetActive(false);
 
             StartCoroutine(ShowFigureTemporarily());
             Stage.isSeenMonster = true;
 
-            this.enabled = false;
+            CompassIcon.objective = GameObject.Find("FabricPoint").transform;
+
+            MonoBehaviour script = nextPoint.GetComponent<MonoBehaviour>();
+            script.enabled = true;
+
+            enabled = false;
         }
     }
 
