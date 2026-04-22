@@ -14,6 +14,7 @@ public class CompassIcon : MonoBehaviour
         GameObject player1 = GameObject.Find("Player");
         objective = door.transform;
         player = player1.transform;
+        Stage.updatedPoint = objective;
     }
 
     // Update is called once per frame

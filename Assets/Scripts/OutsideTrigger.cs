@@ -143,7 +143,33 @@ public class OutsideTrigger : MonoBehaviour
                 }
             }
         }
+        if (player != null && Stage.dreamOver)
+        {
+            GameObject compassIcon = HomeEnterTrigger.FindChildByName(player, "CompassIcon");
+            GameObject point = GameObject.Find("FabricPoint3");
+            compassIcon.SetActive(true);
+            CompassIcon.objective = point.transform;
+            Stage.updatedPoint = point.transform;
+            FindInScene("Thug").SetActive(true);
+        }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public static GameObject FindInScene(string name)
+    {
+        Transform[] allTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+
+        foreach (Transform t in allTransforms)
+        {
+            // filtriraj samo objekte iz scene (ne prefabe iz Projecta)
+            if (t.hideFlags != HideFlags.None)
+                continue;
+
+            if (t.gameObject.scene.isLoaded && t.name == name)
+                return t.gameObject;
+        }
+
+        return null;
     }
 }

@@ -18,6 +18,8 @@ public class FabricCutsceneTrigger : MonoBehaviour
                     forearm,
                     pistol;
 
+    public GameObject thug;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -109,8 +111,7 @@ public class FabricCutsceneTrigger : MonoBehaviour
             }
         }
 
-        // 7. Fade Out
-        //yield return FadeController.Instance.FadeOut(1f);
+        thug.SetActive(true);
 
         // 8. Isključi cutscene kameru
         if (cutsceneCamera != null)
