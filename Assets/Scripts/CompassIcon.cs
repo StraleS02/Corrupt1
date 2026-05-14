@@ -26,29 +26,32 @@ public class CompassIcon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (compassIcon != null)
+        if (compassIcon != null && player != null && objective != null)
         {
-            Vector3 directionToTarget = (objective.position - player.position).normalized;
+            // pravac ka cilju
+            Vector3 directionToTarget = objective.position - player.position;
 
-            // Ugao između pogleda igrača i cilja
-            float angle = Vector3.SignedAngle(player.forward, directionToTarget, Vector3.up);
+            // 🔥 ignoriši visinu
+            directionToTarget.y = 0f;
 
-            // Normalizuj ugao na -180 do 180, pa ga pretvori u X poziciju na kompasu
-            float normalizedAngle = angle / 180f;
+            // forward bez pitch-a
+            Vector3 forward = player.forward;
+            forward.y = 0f;
 
-            // Pomeraj ikonicu levo/desno u zavisnosti od ugla
-            float xPos = normalizedAngle * (compassWidth / 1f);
+            directionToTarget.Normalize();
+            forward.Normalize();
 
-            if (xPos > -460f && xPos < 460f)
-            {
-                // Postavi poziciju ikone
-                compassIcon.anchoredPosition = new Vector2(xPos, compassIcon.anchoredPosition.y);
-            }
-            else
-            {
-                float edgePos = angle < 0 ? -460f : 460f;
-                compassIcon.anchoredPosition = new Vector2(edgePos, compassIcon.anchoredPosition.y);
-            }
+            // ugao levo/desno
+            float angle = Vector3.SignedAngle(forward, directionToTarget, Vector3.up);
+
+            // pretvaranje ugla u UI poziciju
+            float xPos = (angle / 180f) * compassWidth;
+
+            // 🔥 clamp umesto if-a
+            xPos = Mathf.Clamp(xPos, -460f, 460f);
+
+            compassIcon.anchoredPosition =
+                new Vector2(xPos, compassIcon.anchoredPosition.y);
         }
     }
 }
