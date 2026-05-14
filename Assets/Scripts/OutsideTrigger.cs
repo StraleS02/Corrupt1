@@ -150,6 +150,8 @@ public class OutsideTrigger : MonoBehaviour
             compassIcon.SetActive(true);
             CompassIcon.objective = point.transform;
             Stage.updatedPoint = point.transform;
+            MonoBehaviour convo = point.GetComponent<MonoBehaviour>();
+            convo.enabled = true;
             FindInScene("Thug").SetActive(true);
         }
 
