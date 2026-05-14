@@ -97,7 +97,7 @@ public class CarEnterTrigger : MonoBehaviour
     {
         GameObject carCanvas = HomeEnterTrigger.FindChildByName(car, "CanvasCar");
         CompassIcon.player = player.transform;
-        CompassIcon.objective = GameObject.Find("DoorArea").transform;
+        CompassIcon.objective = Stage.updatedPoint.transform;
         carCanvas.SetActive(false);
 
         hasEntered = false;

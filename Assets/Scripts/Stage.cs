@@ -7,4 +7,5 @@ public class Stage : MonoBehaviour
                        dreamOver = false;
 
     public static Transform updatedPoint;
+    public static bool compassCheck = false;
 }
