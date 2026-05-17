@@ -61,6 +61,8 @@ public class RagdollController : MonoBehaviour
         {
             hitRb.AddForceAtPosition(hitForce, hitPoint, ForceMode.Impulse);
         }
+
+        GetComponent<Body>().enabled = true;
     }
 
     // 🟢 DRŽI NPC “ŽIVIM”

@@ -42,23 +42,38 @@ public class OutsideTrigger : MonoBehaviour
         GameObject cutScene =        GameObject.Find("CutsceneCameraRig");
         GameObject spawnPointDream = GameObject.Find("SpawnPointDream");
         GameObject volumeObject =    GameObject.Find("PostProcessingVolume");
+        GameObject body =            HomeEnterTrigger.FindChildByName(player, "ThugHand");
         PostProcessVolume volume =   volumeObject.GetComponent<PostProcessVolume>();
 
         HomeEnterTrigger homeEnterTrigger = FindAnyObjectByType<HomeEnterTrigger>();
         CarEnterTrigger carTrigger =        FindAnyObjectByType<CarEnterTrigger>();
         EnterCarEnd enterCarEnd =           FindAnyObjectByType<EnterCarEnd>();
+        Trunk trunk =                       FindAnyObjectByType<Trunk>();
+        Trashcan[] trashcans = FindObjectsByType<Trashcan>(FindObjectsSortMode.None);
+
+        foreach (Trashcan t in trashcans)
+        {
+            t.player = player;
+            t.uiPrompt = itemPickUpUI;
+            t.body = body;
+        }
         Pistol pistol =                     player.GetComponentInChildren<Pistol>(true);
 
         if (homeEnterTrigger != null && 
             carTrigger != null &&
             enterCarEnd != null)
         {
-            pistol.volume = volume;
+            pistol.volume =              volume;
             enterCarEnd.player =         player;
             homeEnterTrigger.player =    player;
             carTrigger.player =          player;
             carTrigger.playerTransform = player.transform;
             carTrigger.uiPrompt =        carEnterUI;
+            trunk.player =               player;
+            trunk.uiPrompt =             itemPickUpUI;
+            //Trashcan.player =            player;
+            //Trashcan.uiPrompt =          itemPickUpUI;
+            //Trashcan.body =              body;
             car.transform.position =     PlayerItems.carPosition;
             car.transform.rotation =     PlayerItems.carRotation;
         }
@@ -160,16 +175,21 @@ public class OutsideTrigger : MonoBehaviour
 
     public static GameObject FindInScene(string name)
     {
-        Transform[] allTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+        GameObject[] roots =
+        UnityEngine.SceneManagement.SceneManager
+        .GetActiveScene()
+        .GetRootGameObjects();
 
-        foreach (Transform t in allTransforms)
+        foreach (GameObject root in roots)
         {
-            // filtriraj samo objekte iz scene (ne prefabe iz Projecta)
-            if (t.hideFlags != HideFlags.None)
-                continue;
+            Transform[] children =
+                root.GetComponentsInChildren<Transform>(true);
 
-            if (t.gameObject.scene.isLoaded && t.name == name)
-                return t.gameObject;
+            foreach (Transform t in children)
+            {
+                if (t.name == name)
+                    return t.gameObject;
+            }
         }
 
         return null;

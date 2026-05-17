@@ -21,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     private bool isSprinting = false;
 
+    private Animator bobbing;
+
+    void Start()
+    {
+        bobbing = HomeEnterTrigger.FindChildByName(transform.gameObject, "Main Camera").GetComponent<Animator>();
+    }
+
     // Novi Input System koristi ove metode za pokret i skok
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -62,6 +69,16 @@ public class PlayerMovement : MonoBehaviour
 
         // Pomicanje igrača
         Vector3 move = cameraRight * moveInput.x + cameraForward * moveInput.y;
+        bool isMoving = moveInput.magnitude > 0.1f && isGrounded;
+        bobbing.enabled = isMoving;
+        if (isSprinting)
+        {
+            bobbing.speed = 2.5f; // 50% brže
+        }
+        else
+        {
+            bobbing.speed = 1.5f;
+        }
         controller.Move(currentSpeed * Time.deltaTime * move);
 
         // Skakanje

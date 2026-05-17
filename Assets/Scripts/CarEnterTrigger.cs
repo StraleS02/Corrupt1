@@ -65,8 +65,13 @@ public class CarEnterTrigger : MonoBehaviour
     {
         GameObject carCanvas = HomeEnterTrigger.FindChildByName(car, "CanvasCar");
         GameObject carCam = HomeEnterTrigger.FindChildByName(car, "CarCamera");
-        CompassIcon.player = carCam.transform;
-        CompassIcon.objective = Stage.updatedPoint.transform;
+        
+        if (CompassIcon.objective)
+        {
+            CompassIcon.player = carCam.transform;
+            CompassIcon.objective = Stage.updatedPoint.transform;
+        }
+            
         carCanvas.SetActive(true);
 
         hasEntered = true;
@@ -96,8 +101,13 @@ public class CarEnterTrigger : MonoBehaviour
     void ExitVehicle()
     {
         GameObject carCanvas = HomeEnterTrigger.FindChildByName(car, "CanvasCar");
-        CompassIcon.player = player.transform;
-        CompassIcon.objective = Stage.updatedPoint.transform;
+        
+        if (CompassIcon.objective)
+        {
+            CompassIcon.player = player.transform;
+            CompassIcon.objective = Stage.updatedPoint.transform;
+        }
+            
         carCanvas.SetActive(false);
 
         hasEntered = false;

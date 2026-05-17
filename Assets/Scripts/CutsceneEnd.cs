@@ -19,6 +19,9 @@ public class CutsceneEnd : MonoBehaviour
         {
             player.SetActive(true);
             cutsceneCam.SetActive(false);
+            GameObject trunk = HomeEnterTrigger.FindChildByName(GameObject.Find("Car"), "Car_trunk");
+            MonoBehaviour script = trunk.GetComponent<MonoBehaviour>();
+            script.enabled = true;
         }
     }
 }
