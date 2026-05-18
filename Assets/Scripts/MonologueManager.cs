@@ -226,4 +226,16 @@ public class MonologueManager : MonoBehaviour
         SetInstructionAlpha(1f);
     }
 
+    public IEnumerator ShowTemporaryDialogue(string text, float duration)
+    {
+        dialogueText.text = text;
+
+        yield return StartCoroutine(FadeIn());
+
+        yield return new WaitForSeconds(duration);
+
+        yield return StartCoroutine(FadeOut());
+
+        dialogueText.text = "";
+    }
 }

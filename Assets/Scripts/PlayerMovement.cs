@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         bobbing.enabled = isMoving;
         if (isSprinting)
         {
-            bobbing.speed = 2.5f; // 50% brže
+            bobbing.speed = 2.5f;
         }
         else
         {

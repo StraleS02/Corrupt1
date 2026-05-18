@@ -56,6 +56,18 @@ public class Trunk : MonoBehaviour
         if (distance <= interactDistance)
         {
             uiPrompt.SetActive(true);
+            if (!Tasks.isCloseToDump && bodyTrunk.activeSelf && !isOpen && Input.GetKeyDown(KeyCode.E))
+            {
+                StartCoroutine(
+                    FindAnyObjectByType<MonologueManager>()
+                    .ShowTemporaryDialogue(
+                        "I shouldn't do this here...",
+                        3f
+                    )
+                );
+
+                return;
+            }
             if (Input.GetKeyDown(KeyCode.E) && body.activeSelf && isOpen)
             {
                 body.SetActive(false);

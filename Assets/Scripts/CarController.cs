@@ -6,6 +6,11 @@ public class CarController : MonoBehaviour
     public float steering = 45f;
     public float maxSpeed = 50f;
 
+    public Transform steeringWheel;
+
+    public float maxWheelAngle = 60f;
+    public float steeringSmoothness = 5f;
+
     private Rigidbody rb;
 
     float moveInput;
@@ -34,8 +39,27 @@ public class CarController : MonoBehaviour
         // Rotacija automobila (samo ako se kre?e)
         if (rb.linearVelocity.magnitude > 0.5f)
         {
-            float forwardVelocity = Vector3.Dot(rb.linearVelocity, transform.forward);
-            float turn = steerInput * steering * Time.fixedDeltaTime * Mathf.Sign(forwardVelocity);
+            float forwardVelocity =
+                Vector3.Dot(rb.linearVelocity, transform.forward);
+
+            float speedPercent =
+                rb.linearVelocity.magnitude / maxSpeed;
+
+                        // napravi "peak" u sredini brzine
+            float steeringMultiplier =
+                Mathf.Sin(speedPercent * Mathf.PI);
+
+                        // minimalni steering da ne bude 0
+            steeringMultiplier =
+                0.45f + Mathf.Sin(speedPercent * Mathf.PI) * 0.55f;
+
+            float turn =
+                steerInput *
+                steering *
+                steeringMultiplier *
+                Time.fixedDeltaTime *
+                Mathf.Sign(forwardVelocity);
+
             rb.MoveRotation(rb.rotation * Quaternion.Euler(0, turn, 0));
 
             // Anti-slip: smanji lateralnu (bočnu) brzinu da deluje kao da ima grip
@@ -43,5 +67,28 @@ public class CarController : MonoBehaviour
             localVelocity.x *= 0.1f; // smanji bočnu brzinu (što je bliže 0, to više "grip")
             rb.linearVelocity = transform.TransformDirection(localVelocity);
         }
+
+        float wheelMultiplier =
+                Mathf.Lerp(1f, 0.5f,
+                rb.linearVelocity.magnitude / maxSpeed);
+
+        float targetAngle =
+            -steerInput *
+            maxWheelAngle *
+            wheelMultiplier;
+
+        Quaternion targetRotation =
+            Quaternion.Euler(
+                0f,
+                0f,
+                targetAngle
+            );
+
+        steeringWheel.localRotation =
+            Quaternion.Lerp(
+                steeringWheel.localRotation,
+                targetRotation,
+                steeringSmoothness * Time.deltaTime
+            );
     }
 }

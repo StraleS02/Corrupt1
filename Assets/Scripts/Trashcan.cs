@@ -46,6 +46,15 @@ public class Trashcan : MonoBehaviour
             Vector3.Distance(player.transform.position,
                              transform.position);
 
+        if(distance <= 30f)
+        {
+            Tasks.isCloseToDump = true;
+        }
+        else if(distance > 30f && distance < 35f)
+        {
+            Tasks.isCloseToDump = false;
+        }
+
         if(distance <= 5f && (body.activeSelf || bodyDumpster.activeSelf))
         {
             uiPrompt.SetActive(true);

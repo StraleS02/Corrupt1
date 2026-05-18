@@ -71,9 +71,6 @@ public class OutsideTrigger : MonoBehaviour
             carTrigger.uiPrompt =        carEnterUI;
             trunk.player =               player;
             trunk.uiPrompt =             itemPickUpUI;
-            //Trashcan.player =            player;
-            //Trashcan.uiPrompt =          itemPickUpUI;
-            //Trashcan.body =              body;
             car.transform.position =     PlayerItems.carPosition;
             car.transform.rotation =     PlayerItems.carRotation;
         }
@@ -120,6 +117,12 @@ public class OutsideTrigger : MonoBehaviour
             cutScene.SetActive(false);
             player.transform.position = spawnPoint.transform.position;
             player.SetActive(true);
+        }
+
+        if (player != null && spawnPointDream != null && !Tasks.flashlight)
+        {
+            GameObject iconCar = HomeEnterTrigger.FindChildByName(car, "CompassIcon");
+            iconCar.SetActive(false);
         }
 
         if (player != null && spawnPointDream != null && Stage.dream)
